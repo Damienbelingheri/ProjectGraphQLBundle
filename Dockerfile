@@ -4,50 +4,52 @@
 
 
 # https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
-ARG PHP_VERSION=8.0
-ARG CADDY_VERSION=2
+ARG PHP_VERSION=7.4
+ARG CADDY_VERSION=2.1.1
 
 # "php" stage
 FROM php:${PHP_VERSION}-fpm-alpine AS symfony_php
 
+RUN docker-php-ext-install mysqli pdo_mysql
+#RUN docker-php-ext-install mbstring opcache pdo pdo_mysql mysql mysqli
 # persistent / runtime deps
 RUN apk add --no-cache \
-		acl \
-		fcgi \
-		file \
-		gettext \
-		git \
-		jq \
-	;
+        acl \
+        fcgi \
+        file \
+        gettext \
+        git \
+        jq \ 
+    ;
 
 ARG APCU_VERSION=5.1.19
 RUN set -eux; \
 	apk add --no-cache --virtual .build-deps \
-		$PHPIZE_DEPS \
-		icu-dev \
-		libzip-dev \
-		zlib-dev \
+	    $PHPIZE_DEPS \
+	    icu-dev \
+	    libzip-dev \
+	    zlib-dev \
 	; \
 	\
 	docker-php-ext-configure zip; \
 	docker-php-ext-install -j$(nproc) \
-		intl \
-		zip \
+	    intl \
+	    zip \
 	; \
 	pecl install \
-		apcu-${APCU_VERSION} \
+	    apcu-${APCU_VERSION} \
 	; \
 	pecl clear-cache; \
 	docker-php-ext-enable \
-		apcu \
-		opcache \
+	    apcu \
+	    opcache \
 	; \
 	\
 	runDeps="$( \
-		scanelf --needed --nobanner --format '%n#p' --recursive /usr/local/lib/php/extensions \
-			| tr ',' '\n' \
-			| sort -u \
-			| awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
+	    scanelf --needed --nobanner --format '%n#p' --recursive /usr/local/lib/php/extensions \
+	        | tr ',' '\n' \
+	        | sort -u \
+	        | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
 	)"; \
 	apk add --no-cache --virtual .phpexts-rundeps $runDeps; \
 	\
@@ -76,7 +78,7 @@ ARG STABILITY="stable"
 ENV STABILITY ${STABILITY:-stable}
 
 # Allow to select skeleton version
-ARG SYMFONY_VERSION=""
+ARG SYMFONY_VERSION="5.2"
 
 # Download the Symfony skeleton and leverage Docker cache layers
 RUN composer create-project "symfony/skeleton ${SYMFONY_VERSION}" . --stability=$STABILITY --prefer-dist --no-dev --no-progress --no-interaction; \
@@ -92,8 +94,7 @@ RUN set -eux; \
 	composer install --prefer-dist --no-dev --no-progress --no-scripts --no-interaction; \
 	composer dump-autoload --classmap-authoritative --no-dev; \
 	composer symfony:dump-env prod; \
-	composer run-script --no-dev post-install-cmd; \
-	chmod +x bin/console; sync
+	composer run-script --no-dev post-install-cmd; sync
 VOLUME /srv/app/var
 
 COPY docker/php/docker-healthcheck.sh /usr/local/bin/docker-healthcheck
@@ -110,16 +111,13 @@ CMD ["php-fpm"]
 FROM caddy:${CADDY_VERSION}-builder-alpine AS symfony_caddy_builder
 
 RUN xcaddy build \
-	--with github.com/dunglas/mercure@main \
-	--with github.com/dunglas/mercure/caddy@main \
-	--with github.com/dunglas/vulcain/caddy
+    --with github.com/dunglas/vulcain/caddy
 
 FROM caddy:${CADDY_VERSION} AS symfony_caddy
 
+
 WORKDIR /srv/app
 
-ENV MERCURE_DEMO="demo /srv/mercure-assets/"
-COPY --from=dunglas/mercure:v0.11 /srv/public /srv/mercure-assets/
 COPY --from=symfony_caddy_builder /usr/bin/caddy /usr/bin/caddy
 COPY --from=symfony_php /srv/app/public public/
 COPY docker/caddy/Caddyfile /etc/caddy/Caddyfile

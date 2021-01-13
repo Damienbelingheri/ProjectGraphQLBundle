@@ -4,10 +4,10 @@
 
 ***
 
-### Retrieve repository:
+### Retrieve repository: 
 
 ```shell
-$ git clone  git@github.com:Damienbelingheri/ProjectGraphQLBundle
+ $ git clone  git@github.com:Damienbelingheri/ProjectGraphQLBundle
 ```
 
 ### Go to the project directory :
@@ -21,5 +21,3 @@ cd ProjectGraphQLBundle
 ```shell
  docker-compose up -d
 ```
-
-
