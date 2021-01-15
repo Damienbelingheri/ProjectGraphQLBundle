@@ -29,3 +29,12 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    
+    # make the Doctrine entity manager be available for injection in the constructor 
+    Doctrine\ORM\EntityManager: 
+        "@doctrine.orm.default_entity_manager"
+
+    
+    planet.resolver:
+        alias: App\Resolver\PlanetResolver
+        public: true
