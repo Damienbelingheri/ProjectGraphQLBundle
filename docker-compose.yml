@@ -59,7 +59,7 @@ services:
       depends_on:
         - database
       image: phpmyadmin
-      container_name: ideal_pma
+      container_name: graphql_pma
       restart: always
       ports:
         - 8081:80
