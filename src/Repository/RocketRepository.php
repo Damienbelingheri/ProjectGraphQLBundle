@@ -1,0 +1,61 @@
+<?php
+
+namespace App\Repository;
+
+use App\Entity\Rocket;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
+
+/**
+ * @method Rocket|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Rocket|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Rocket[]    findAll()
+ * @method Rocket[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
+class RocketRepository extends ServiceEntityRepository
+{
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Rocket::class);
+    }
+
+    public function findByAstronaut($id)
+    {
+        return $this->createQueryBuilder('rocket')
+            ->innerJoin('rocket.team', 'team')
+            ->innerJoin('team.astronauts', 'astronauts')
+            ->andWhere('astronauts.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    // /**
+    //  * @return Rocket[] Returns an array of Rocket objects
+    //  */
+    /*
+    public function findByExampleField($value)
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.exampleField = :val')
+            ->setParameter('val', $value)
+            ->orderBy('r.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    */
+
+    /*
+    public function findOneBySomeField($value): ?Rocket
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.exampleField = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+    */
+}

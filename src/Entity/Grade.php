@@ -2,12 +2,13 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\GradeRepository")
  */
-class Grade
+class Grade 
 {
     /**
      * @ORM\Id()
@@ -48,4 +49,11 @@ class Grade
     {
         return $this->id;
     }
+    
+    public function getAll(){
+
+        return [1,2];
+
+    }
+
 }

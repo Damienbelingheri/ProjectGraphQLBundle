@@ -8,6 +8,11 @@ Astronaut:
                 type: 'String!'
             grade:
                 type: 'Grade'
+            team:
+                type: 'Team'
             planet:
                 type: 'Planet'
                 resolve: "@=service('planet.resolver').resolveInAstronaut(value, args, context, info)"
+            rocket:
+                type: 'Rocket'
+                resolve: "@=service('rocket.resolver').resolveInAstronaut(value, args, context, info)"

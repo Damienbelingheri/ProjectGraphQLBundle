@@ -4,3 +4,17 @@ AstronautInput:
         fields:
             pseudo:
                 type: 'String!'
+                validation: # applying constraints to `username`
+                    - Length:
+                        min: 6
+                        max: 32
+            grade:
+                type: "GradeInput"
+                validation:
+                   - Choice: 
+                        callback: [App\Entity\Grade, getAll]
+            team:
+                type: "Int"
+                validation: App\Entity\Team::$id
+
+

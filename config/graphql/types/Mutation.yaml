@@ -11,7 +11,9 @@ Mutation:
         fields:
             NewAstronaut:
                 type: MutationSuccess
-                resolve: "@=mutation('NewAstronaut', [args['input']['pseudo']])"
+                resolve: "@=mutation('NewAstronaut', [args])"
                 args:
                     input:
-                        type: AstronautInput!
+                        type: "AstronautInput"
+                        validation: cascade        
+                   

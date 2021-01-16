@@ -1,0 +1,9 @@
+Rocket:
+    type: object
+    config:
+        fields:
+            id:
+                type: 'Int!'
+            name:
+                type: 'String!'
+                

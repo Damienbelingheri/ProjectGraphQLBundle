@@ -38,3 +38,7 @@ services:
     planet.resolver:
         alias: App\Resolver\PlanetResolver
         public: true
+
+    rocket.resolver:
+        alias: App\Resolver\RocketResolver
+        public: true

@@ -1,0 +1,28 @@
+Team:
+    type: object
+    config:
+        fields:
+            id:
+                type: 'Int!'
+            name:
+                type: 'String!'
+            country:
+                type: 'String!'
+            photo:
+                type: 'String!'
+            astronauts:
+                type: '[Astronaut]'
+            rocket:
+                type: 'Rocket'
+            captain:
+                type: 'Astronaut'
+TeamInput:
+    type: "input-object"
+    config:
+        fields:
+            name:
+                type: "String!"
+            country: 
+                type: "String!"
+            photo:
+                type: "String"           

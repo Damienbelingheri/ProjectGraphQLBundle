@@ -19,3 +19,24 @@ Query:
                         description: 'Resolves Planet using its id.'
                         type: 'Int!'
                 resolve: "@=resolver('Planet', [args['id']])"
+            Team:
+                type: 'Team'
+                args:
+                    id:
+                        description: 'Resolves Team using its id'
+                        type: 'Int!'
+                resolve: "@=resolver('Team', [args['id']])"
+            Teams:
+                type: '[Team]'
+                resolve: "@=resolver('Teams')"
+            Rocket:
+                type: 'Rocket'
+                args:
+                    id:
+                        description: 'Resolves Rocket using its id'
+                        type: 'Int!'
+                resolve: "@=resolver('Rocket', [args['id']])"
+            Rockets:
+                type: '[Rocket]'
+                resolve: "@=resolver('Rockets')"
+                

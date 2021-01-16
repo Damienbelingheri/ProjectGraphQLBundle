@@ -1,8 +1,28 @@
 Grade:
-    type: object
+    type: input-object
     config:
         fields:
             id:
                 type: 'Int!'
             name:
                 type: 'String!'
+GradeInput:
+    type: "input-object"
+    config:
+        fields:
+            id: 
+                type: "Int"
+            name:
+                type: "String!"
+
+
+# EnumGrade:
+#     type: enum
+#     config:
+#         description: "One of the films in the Star Wars Trilogy"
+#         values:
+#             GRADE:
+#                 value: 1
+#                 description: "Released in 1977."
+#                 # to deprecate a value, only set the deprecation reason
+#                 #deprecationReason: "Just because"

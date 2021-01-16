@@ -1,0 +1,35 @@
+Ça va aussi, merci !
+Je connaissais Typescript de nom mais je n'ai jamais eu l'occasion de l'utiliser. Je vais me pencher dessus cette semaine :) 
+
+Si tu as le temps, j'ai un petit problème avec GraphQLBundle 
+
+J'ai une entité Astronaut et une Grade
+
+Un astronaute peut avoir un grade(OneToMany)
+Un grade peut avoir plusieurs astronaute(ManyToOne)
+
+
+Ce que j'ai fait pour tester: 
+
+### requête Graphql
+
+mutation NewAstronaut($astronaute: AstronautInput!) {
+  NewAstronaut(input: $astronaute) {
+    content
+  }
+}
+
+GraphQL Variables
+{
+    "astronaute": {
+        "pseudo": "Matthieu",
+        "grade": "3"
+    }
+}
+
+Résultat: New Astronaut envoyé en BDD.
+
+Comportement attendu: Message d'erreur indiquant que "grade": "3" n'est pas valide. puisque je n'ai que 2 grades dans ma bdd 
+
+
+Je pense mal m'y prendre, si tu as le temps pour m'aiguiller afin que je puisse continuer mon apprentissage de graphql
