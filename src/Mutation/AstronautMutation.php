@@ -29,9 +29,7 @@ final class AstronautMutation  implements MutationInterface, AliasedInterface
     public function resolve(Argument $args,InputValidator $validator)
     #public function resolve(string $pseudo)
     {
-      
-        
-        //dd('coucou');
+
         $input = $args['input'];
         // create new Astronaut
         $astronaute = new Astronaut();
@@ -53,12 +51,6 @@ final class AstronautMutation  implements MutationInterface, AliasedInterface
 
         return ['content' => 'on est bon'];
     }
-
-    public function getAll(){
-
-        return [1,2];
-    }
-
 
     /**
      * {@inheritdoc}
