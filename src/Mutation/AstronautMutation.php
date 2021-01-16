@@ -26,24 +26,27 @@ final class AstronautMutation  implements MutationInterface, AliasedInterface
         $this->gradeRepository = $gradeRepository;
     }
 
-    public function resolve(Argument $args)
+    public function resolve(Argument $args,InputValidator $validator)
     #public function resolve(string $pseudo)
     {
-
+      
         
         //dd('coucou');
         $input = $args['input'];
         // create new Astronaut
         $astronaute = new Astronaut();
-        $astronaute->setPseudo($input['pseudo']);
-        
+  
         $grade = $this->gradeRepository->find($input['grade']);
-        $astronaute->setGrade($grade);
-
         $team = $this->teamRepository->find($input['team']);
-        $astronaute->setTeam($team);
+      
+        if (!$team || !$grade){
 
-        
+            return ['content' =>'invalidate data'];
+        }
+
+        $astronaute->setPseudo($input['pseudo']);
+        $astronaute->setGrade($grade);
+        $astronaute->setTeam($team);
 
         $this->em->persist($astronaute);
         $this->em->flush();
