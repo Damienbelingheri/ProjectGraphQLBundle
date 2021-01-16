@@ -26,7 +26,7 @@ final class AstronautMutation  implements MutationInterface, AliasedInterface
         $this->gradeRepository = $gradeRepository;
     }
 
-    public function resolve(Argument $args,InputValidator $validation)
+    public function resolve(Argument $args)
     #public function resolve(string $pseudo)
     {
 
@@ -38,7 +38,6 @@ final class AstronautMutation  implements MutationInterface, AliasedInterface
         $astronaute->setPseudo($input['pseudo']);
         
         $grade = $this->gradeRepository->find($input['grade']);
-        $validation->validate($grade);
         $astronaute->setGrade($grade);
 
         $team = $this->teamRepository->find($input['team']);

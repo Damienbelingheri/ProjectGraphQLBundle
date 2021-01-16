@@ -1,5 +1,5 @@
 Grade:
-    type: input-object
+    type: object
     config:
         fields:
             id:
@@ -11,7 +11,7 @@ GradeInput:
     config:
         fields:
             id: 
-                type: "Int"
+                type: "Int!"
             name:
                 type: "String!"
 

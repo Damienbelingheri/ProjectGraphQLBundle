@@ -9,7 +9,7 @@ AstronautInput:
                         min: 6
                         max: 32
             grade:
-                type: "GradeInput"
+                type: "Int"
                 validation:
                    - Choice: 
                         callback: [App\Entity\Grade, getAll]
